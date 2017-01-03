@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<script src="d3.v3.min.js"></script>
+  	<script src="dimple.v2.1.2.min.js"></script>
+  	<style>
+  		body {
+  			margin: 50px;
+  			width: 1000px;
+  			height: 500px;
+
+  		}
+  		h1 {
+  			text-align: center;
+  			margin-left: 50px;
+  			font-family: sans-serif;
+  		}
+  		h2 {
+  			text-align: left;
+  			margin-left: 50px;
+  			font-family: sans-serif;
+  		}
+  	</style>
+ </head>
+ <body>
+	<h1>% Sobreviventes Titanic</h1>
+
+	<div id='chartContainer'>
+	
+
+ 	<script type="text/javascript">
+	 
+			var svg = dimple.newSvg("#chartContainer", 600, 400);
+			d3.csv('Datasets/titanic_final.csv', function(data) {
+			var myChart = new dimple.chart(svg, data);
+			myChart.setBounds(95, 25, 475, 335);	
+			myChart.addCategoryAxis("x", ['Classe','Sexo']);
+			var y = myChart.addCategoryAxis("y", 'Age');
+			y.addOrderRule(["Não Registrado", "<14", "14-30", "31-50", ">51"]);
+			var z = myChart.addMeasureAxis("z", "Survived");
+			var s = myChart.addSeries("Sexo", dimple.plot.bubble);
+			myChart.assignColor("Feminino","#F298A4");	
+			myChart.assignColor("Masculino","#98A9F2");
+			s.aggregate = dimple.aggregateMethod.sum;
+			z.overrideMax = 200;
+			myChart.addLegend(240, 10, 330, 20, "right");
+			myChart.draw();
+			});
+			
+			//Colors
+	        mychart.assignColor("Feminino","#98A9F2")
+			mychart.assignColor("Masculino","blue	")
+		</script>
+  	</div>
+  	
+  
+
+ </body>
+ </html>

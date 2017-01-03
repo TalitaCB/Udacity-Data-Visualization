@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<script src="d3.v3.min.js"></script>
+  	<script src="dimple.v2.1.2.min.js"></script>
+  	<style type="text/css">
+  		text.dimple-axis{
+		font-size: 200px;
+		font-weight: bold;
+		font-style: helvetica;
+	}
+	text.dimple-storyboard-label{
+		opacity: 0;
+	}
+  		
+  	</style>
+ </head>
+ <body>
+	
+
+	<div id='chartContainer'>
+	
+
+ 	<script type="text/javascript">
+	 
+				
+			
+			var svg = dimple.newSvg("#chartContainer", 1250, 800);
+			d3.csv('v1/titanic_final.csv', function(data) {
+			
+			// Cria texto explicativo lateral
+			var notification = new dimple.chart(svg, data);
+			notification.setBounds(980, 250, 200, 200);
+			
+			//formata fonte, cor, posição e tamanho do texto lateral
+			svg.selectAll("title_text")
+				.data(["40,62% dos passageiros"," sobreviveu a tragédia.",
+				  "",
+				  "Destes",
+				  " 20,53% dos eram homens ",
+				  "75,48% eram mulheres."])
+				.enter()
+				.append("text")
+				.attr("x", 980)
+				.attr("y", function (d, i) { return 300 + i * 22; })
+				.style("font-family", "arial")
+				.style("font-size", "18px")
+				.style("color", "Black")
+				.text(function (d) { return d; });
+			
+					
+			//Cria grafico principal
+			var myChart = new dimple.chart(svg, data);
+			myChart.setBounds(100, 220,850, 400);	
+			
+			//Adiciona eixo x e formata tamanho e fonte
+			var x = myChart.addCategoryAxis("x", ['Classe','Sexo']);	
+			x.fontSize = 12;
+			x.fontFamily = "helvetica";		
+			x.title = "Classe Social";			
+			
+			//Adiciona eixo y e formata tamanho e fonte
+			var y = myChart.addCategoryAxis("y", 'Age');
+			y.fontSize = 12;
+			y.fontFamily = "helvetica";
+			//y.addOrderRule(["<14", "14-30", "31-50", ">51"]);
+			y.title = "Faixa Idade";	
+			
+			//Adiciona eixo z
+			var z = myChart.addMeasureAxis("z", "Survived");
+			
+			
+			
+			//Adiciona tamanho das bolhas
+			var s = myChart.addSeries("Sexo", dimple.plot.bubble);
+			
+			//Customize the tooltip from bubbleSeries
+			 s.getTooltipText = function (e) {
+                
+						
+				var rows = [];
+						return [
+							"Sexo: " + e.aggField[0],							
+							"% Sobreviventes: " + e.zValue + "%"
+							];
+				}
+            
+			
+			
+			//Define cor da série. Vermelho para feminino e azul para masculino
+			myChart.assignColor("Feminino","#F298A4");	
+			myChart.assignColor("Masculino","#98A9F2");
+			
+			z.overrideMax = 200;
+			
+			//Posiciona legenda
+			myChart.addLegend(250, 163, 650, 60, "right");
+							
+			
+			//Adiciona titulo a legenda
+			svg.append('text')
+				.attr("x", 700)
+				.attr("y", 170)
+				.style("text-anchor", "middle")
+				.style("font-family", "arial")
+				.style("font-weight", "bold")
+				.style("font-size", "12px")
+				.text("Sexo:");
+			
+			// Adicionando titulo ao gráfico
+			svg.append('text')
+				.attr("x", 70)
+				.attr("y", 20)
+				.style("text-anchor", "left")
+				.style("font-family", "sans-serif")
+				.style("font-weight", "bold")				
+				.text("Quanto maior a classe social, maior a taxa de sobrevivência");	
+			
+			
+			//Adiciona legenda do tamanho da bolha
+			svg.append('text')
+				.attr("x", 120)
+				.attr("y", 170)
+				.style("text-anchor", "middle")
+				.style("font-family", "arial")
+				.style("font-weight", "bold")
+				.style("font-size", "12px")
+				.text("% Sobreviventes:");
+			
+			//Texto de explicação do tamanho da bolha
+			svg.selectAll("title_text")
+				.data(["O tamanho das bolhas é referente ao  %  de Sobreviventes, ou seja, total de sobreviventes",
+				  " naquele sexo, idade e classe social dividido pelo total de passageiros no grupo."])
+				  
+				.enter()
+				.append("text")
+				.attr("x", 190)
+				.attr("y", function (d, i) { return 170 + i * 22; })
+				.style("font-family", "sans-serif")
+				.style("font-size", "10px")
+				.style("color", "Black")
+				.text(function (d) { return d; });
+			
+			//Texto de explicação sobre dataset
+			svg.selectAll("title_text")
+				.data(["O naufrágio do RMS Titanic é um dos naufrágios mais infames da história. Em 15 de abril de 1912, durante sua viagem inaugural, o Titanic afundou após ",
+				       "colidir com um iceberg  matando 1502  de  2224 passageiros e tripulação.  Uma das razões que o naufrágio levou  a tal perda de vida  era que  não havia ",								 
+				       "bastantes barcos salva-vidas para os passageiros e tripulação. Embora houvesse algum elemento de sorte envolvido na sobrevivência da tragédia, alguns ",				
+				       "grupos de pessoas tinham mais probabilidade de sobreviver do que outros como mulheres, crianças e a classe alta."])
+				   
+				  
+				.enter()
+				.append("text")
+				.attr("x", 70)
+				.attr("y", function (d, i) { return 60 + i * 20; })
+				.style("font-family", "arial")
+				.style("font-size", "12px")
+				.style("color", "Black")
+				.text(function (d) { return d; });
+			
+			
+			//desenha o gráfico principal
+			myChart.draw();
+						
+				
+		  
+			
+			});
+		
+			
+		</script>
+  	</div>
+  	
+  
+
+ </body>
+ </html>

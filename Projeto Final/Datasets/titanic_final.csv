@@ -1,0 +1,25 @@
+Age,Classe,Sexo,Survived
+ <14,1ª Classe,Feminino,50.0
+ <14,1ª Classe,Masculino,100.0
+ <14,2ª Classe,Feminino,100.0
+ <14,2ª Classe,Masculino,100.0
+ <14,3ª Classe,Feminino,50.0
+ <14,3ª Classe,Masculino,33.3333333333
+14-30,1ª Classe,Feminino,96.9696969697
+14-30,1ª Classe,Masculino,43.4782608696
+14-30,2ª Classe,Feminino,91.6666666667
+14-30,2ª Classe,Masculino,5.76923076923
+14-30,3ª Classe,Feminino,54.7368421053
+14-30,3ª Classe,Masculino,12.0833333333
+31-50,1ª Classe,Feminino,97.8260869565
+31-50,1ª Classe,Masculino,38.5714285714
+31-50,2ª Classe,Feminino,92.5925925926
+31-50,2ª Classe,Masculino,11.4285714286
+31-50,3ª Classe,Feminino,27.2727272727
+31-50,3ª Classe,Masculino,12.676056338
+>51,1ª Classe,Feminino,100.0
+>51,1ª Classe,Masculino,19.2307692308
+>51,2ª Classe,Feminino,66.6666666667
+>51,2ª Classe,Masculino,8.33333333333
+>51,3ª Classe,Feminino,100.0
+>51,3ª Classe,Masculino,0.0

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+  	<script src="d3.v3.min.js"></script>
+  	<script src="dimple.v2.1.2.min.js"></script>
+  	<style type="text/css">
+  		text.dimple-axis{
+		font-size: 200px;
+		font-weight: bold;
+		font-style: helvetica;
+	}
+	text.dimple-storyboard-label{
+		opacity: 0;
+	}
+  		
+  	</style>
+ </head>
+ <body>
+	
+
+	<div id='chartContainer'>
+	
+
+ 	<script type="text/javascript">
+	 
+				
+			
+			var svg = dimple.newSvg("#chartContainer", 1250, 580);
+			d3.csv('Datasets/titanic_final.csv', function(data) {
+			
+			// Cria texto explicativo lateral
+			var notification = new dimple.chart(svg, data);
+			notification.setBounds(980, 250, 200, 200);
+
+			svg.selectAll("title_text")
+			.data(["40.62% dos passageiros"," sobreviveu a tragédia.",
+			  "",
+              "Destes",
+              " 20.53% dos eram homens ",
+              "75.48% eram mulheres."])
+			.enter()
+			.append("text")
+			.attr("x", 980)
+			.attr("y", function (d, i) { return 300 + i * 22; })
+			.style("font-family", "arial")
+			.style("font-size", "18px")
+			.style("color", "Black")
+			.text(function (d) { return d; });
+			
+					
+			//Cria grafico principal
+			var myChart = new dimple.chart(svg, data);
+			myChart.setBounds(100, 120, 850, 400);	
+			var x = myChart.addCategoryAxis("x", ['Classe','Sexo']);	
+			x.fontSize = 12;
+			x.fontFamily = "helvetica";		
+			x.title = "Classe Social";			
+			var y = myChart.addCategoryAxis("y", 'Age');
+			y.fontSize = 12;
+			y.fontFamily = "helvetica";
+			y.addOrderRule(["Não Registrado", "<14", "14-30", "31-50", ">51"]);
+			y.title = "Faixa Idade";	
+			var z = myChart.addMeasureAxis("z", "Survived");
+			var s = myChart.addSeries("Sexo", dimple.plot.bubble);
+			
+			
+	  
+			myChart.assignColor("Feminino","#F298A4	");	
+			myChart.assignColor("Masculino","#98A9F2");
+			s.aggregate = dimple.aggregateMethod.sum;
+			z.overrideMax = 200;
+			myChart.addLegend(100, 75, 650, 60, "right");
+			
+			// Adicionando titulo ao gráfico
+			svg.append('text')
+			.attr("x", 550)
+			.attr("y", 30)
+			.style("text-anchor", "middle")
+			.style("font-family", "arial")
+			.style("font-weight", "bold")
+			.style("font-size", "25px")
+			.text("% Passageiros Sobreviventes do Titanic");			
+			
+			//Adiciona titulo a legenda
+			svg.append('text')
+			.attr("x", 550)
+			.attr("y", 82)
+			.style("text-anchor", "middle")
+			.style("font-family", "arial")
+			.style("font-weight", "bold")
+			.style("font-size", "12px")
+			.text("Sexo:");
+			
+			//desenha o gráfico principal
+			myChart.draw();
+						
+				
+			//Define cores 
+	        mychart.assignColor("Feminino","#98A9F2")
+			mychart.assignColor("Masculino","blue	")
+		  
+			
+			});
+		
+			
+		</script>
+  	</div>
+  	
+  
+
+ </body>
+ </html>
